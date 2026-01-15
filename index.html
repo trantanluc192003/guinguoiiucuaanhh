@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="utf-8" />
@@ -143,5 +143,194 @@
       setInterval(()=>{ dropPetals(5 + Math.floor(Math.random()*6)); }, 2500);
     });
   </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Guinguoiiudethuongcuaanh</title>
+
+<style>
+:root{
+  --pink-bg:#ffe7f0;
+  --pink-strong:#ff2e79;
+  --pink-soft:#ffd6e7;
+}
+
+html,body{
+  margin:0;height:100%;
+  background:var(--pink-bg);
+  font-family: ui-monospace,monospace;
+  color:var(--pink-strong);
+}
+
+/* ===== INTRO ===== */
+#intro{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:var(--pink-bg);
+  z-index:999;
+}
+
+#intro button{
+  padding:14px 28px;
+  font-size:16px;
+  border-radius:30px;
+  border:2px solid var(--pink-strong);
+  background:var(--pink-soft);
+  color:var(--pink-strong);
+  cursor:pointer;
+  transition:.3s;
+}
+
+#intro button:hover{
+  background:var(--pink-strong);
+  color:#fff;
+  transform:scale(1.05);
+}
+
+/* ===== MAIN ===== */
+.wrap{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  padding:16px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.left,.right{
+  display:flex;
+  justify-content:center;
+}
+
+.hero{
+  width:clamp(260px,46vw,520px);
+  border-radius:14px;
+  opacity:0;
+  transition:opacity 1.5s ease;
+}
+
+.hero.show{ opacity:1; }
+
+.chat{
+  width:clamp(280px,46vw,560px);
+  background:var(--pink-soft);
+  border:2px solid var(--pink-strong);
+  border-radius:16px;
+  padding:14px 18px;
+  box-shadow:0 8px 30px rgba(255,46,121,.12);
+  position:relative;
+}
+
+.chat::after{
+  content:"";
+  position:absolute;
+  left:-8px;top:22px;
+  width:16px;height:16px;
+  background:var(--pink-soft);
+  border-left:2px solid var(--pink-strong);
+  border-bottom:2px solid var(--pink-strong);
+  transform:rotate(45deg);
+}
+
+.typewriter{
+  white-space:pre-wrap;
+  line-height:1.8;
+  font-size:15px;
+}
+
+.cursor{
+  display:inline-block;
+  width:8px;
+  background:var(--pink-strong);
+  animation:blink 1s steps(1) infinite;
+}
+
+@keyframes blink{50%{opacity:0}}
+
+.petal{
+  position:fixed;
+  top:-10vh;
+  font-size:18px;
+  pointer-events:none;
+  animation:fallSpin var(--dur,10s) linear forwards,fadeout var(--dur,10s);
+}
+
+@keyframes fallSpin{
+  to{transform:translateY(120vh) rotate(var(--rot,720deg))}
+}
+@keyframes fadeout{
+  85%{opacity:1}100%{opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <button id="startBtn">Em ấn vào đây nha &lt;3</button>
+</div>
+
+<!-- MAIN -->
+<div class="wrap">
+  <div class="left">
+    <img id="hero" src="hpbd.png" class="hero">
+  </div>
+
+  <div class="right">
+    <div class="chat">
+      <div class="typewriter" id="typeTarget"></div>
+      <span class="cursor" id="cursor"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+const message = `Gửi em,\nHạp bì bớt đề tíu diu\nHạp bì bớt đề tíu diu\nHạp bì bết đê, háp bi bết đề\nHáp bi bết đề tíu diuu<3\n Vậy là người iu của anh đã bước sang tuổi 22 òii, anh chúc em tuổi mới thật rực rỡ, chúc em có thật là nhiềuu niềm vui, gặp được nhiều điều may mắn và hạnh phúc, và đạt được những mục tiêu mong muốn của mình nhé. Tuổi mới một hành trình mới lại mở ra chắc hẳn rằng sẽ có những có khăn và thử thách mới, nhưng anh tin rằng em có đủ tự tin và mạnh mẽ để vượt qua tất cả. Và em hãy nhớ rằng đằng sau em luôn có anh là nơi để em có thể chia sẻ và yên tâm dựa vào mỗi khi cần em nhé!\n Một lần nữa anh cảm ơn em vì đã xuất hiện và làm cho cuộc sống của anh có ý nghĩa hơn, có thể anh không ở gần nhưng tình cảm thì vẫn ở đây không xa chút nào cả, em mãi là bông hoa đẹp nhất đối với anh🌸.\n\nYêu em❤.`;
+
+const target = document.getElementById("typeTarget");
+const cursor = document.getElementById("cursor");
+const hero = document.getElementById("hero");
+
+function typeWriter(text,speed=45){
+  let i=0;
+  const timer=setInterval(()=>{
+    target.textContent=text.slice(0,i++);
+    target.appendChild(cursor);
+    if(i>text.length) clearInterval(timer);
+  },speed);
+}
+
+function dropPetals(){
+  const s=document.createElement("span");
+  s.className="petal";
+  s.textContent=Math.random()<0.5?"🌸":"💮";
+  s.style.left=Math.random()*100+"vw";
+  s.style.setProperty("--dur",8+Math.random()*5+"s");
+  s.style.setProperty("--rot",Math.random()<.5?"720deg":"-720deg");
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),12000);
+}
+
+document.getElementById("startBtn").onclick=()=>{
+  document.getElementById("intro").style.display="none";
+
+  hero.classList.add("show");
+
+  setTimeout(()=>{
+    typeWriter(message);
+    setInterval(dropPetals,2500);
+  },2000);
+};
+</script>
+
 </body>
 </html>
