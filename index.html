@@ -211,22 +211,26 @@ html,body{
   justify-content:center;
 }
 
-/* ẢNH */
+/* ===== ẢNH (SCALE EFFECT) ===== */
 .hero{
   width: clamp(260px, 46vw, 520px);
   height:auto;
   display:block;
   border-radius:14px;
 
-  opacity:0;
-  transition:opacity 1.8s ease;
+  transform: scale(0.6);
+  opacity: 0;
+  transition:
+    transform 1.6s ease-out,
+    opacity 1.2s ease;
 }
 
 .hero.show{
-  opacity:1;
+  transform: scale(1);
+  opacity: 1;
 }
 
-/* CHAT */
+/* ===== CHAT ===== */
 .chat{
   width:clamp(280px,46vw,560px);
   background:var(--pink-soft);
@@ -267,7 +271,7 @@ html,body{
   50%{opacity:0}
 }
 
-/* HOA RƠI */
+/* ===== HOA RƠI ===== */
 .petal{
   position:fixed;
   top:-10vh;
@@ -292,9 +296,8 @@ html,body{
 /* ===== MOBILE ===== */
 @media (max-width:768px){
   .wrap{
-    grid-template-columns:1fr;   /* ẢNH TRÊN – CHỮ DƯỚI */
+    grid-template-columns:1fr; /* ảnh trên – chữ dưới */
   }
-
   .chat::after{
     display:none;
   }
@@ -359,7 +362,7 @@ function dropPetals(){
 startBtn.onclick = () => {
   intro.style.display = "none";   // 1️⃣ tắt intro
 
-  hero.classList.add("show");     // 2️⃣ ảnh fade-in
+  hero.classList.add("show");     // 2️⃣ ảnh scale nhỏ → to
 
   setTimeout(() => {              // 3️⃣ đợi 2s rồi chạy chữ
     typeWriter(message);
