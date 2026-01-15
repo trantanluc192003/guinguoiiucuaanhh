@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guinguoiiudethuongcuaanh</title>
+  <style>
+    :root{
+      --pink-bg: #ffe7f0;
+      --pink-strong: #ff2e79;
+      --pink-soft: #ffd6e7;
+    }
+    html, body { margin:0; height:100%; background: var(--pink-bg); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace; color: var(--pink-strong); }
+
+    .wrap {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: start;
+      justify-items: center;
+      padding: 16px;
+      box-sizing: border-box;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .left { width: 100%; display:flex; justify-content:center; }
+    .hero {
+      width: clamp(260px, 46vw, 520px);
+      height: auto;
+      display:block;
+      border-radius: 14px;
+    }
+
+    .right { width: 100%; display:flex; justify-content:center; }
+    .chat {
+      width: clamp(280px, 46vw, 560px);
+      box-sizing: border-box;
+      background: var(--pink-soft);
+      border: 2px solid var(--pink-strong);
+      border-radius: 16px;
+      padding: 14px 18px;
+      box-shadow: 0 8px 30px rgba(255,46,121,0.12);
+      position: relative;
+    }
+    .chat::after{
+      content:""; position:absolute; left:-8px; top:22px; width:16px; height:16px; background: var(--pink-soft); border-left:2px solid var(--pink-strong); border-bottom:2px solid var(--pink-strong); transform: rotate(45deg); border-bottom-left-radius:4px;
+    }
+
+    .typewriter {
+      white-space: pre-wrap;
+      line-height: 1.8;
+      font-size: 15px;
+      color: var(--pink-strong);
+      text-shadow: 0 0 6px rgba(255,46,121,0.12);
+      position: relative;
+      border-left: 2px solid transparent;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      background: var(--pink-strong);
+      animation: blink 1s steps(1) infinite;
+      vertical-align: bottom;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .petal{ position:fixed; top:-10vh; font-size:18px; will-change:transform,opacity; pointer-events:none; filter: drop-shadow(0 4px 6px rgba(255,128,170,.35)); opacity:.95; animation: fallSpin var(--dur,10s) linear forwards, fadeout var(--dur,10s) ease-out forwards; z-index: 5; }
+    @keyframes fallSpin{ from{transform:translateY(0) rotate(0)} to{transform:translateY(120vh) rotate(var(--rot,720deg))}}
+    @keyframes fadeout{0%,85%{opacity:.95}100%{opacity:0}}
+
+    @media (max-width: 768px){
+      .wrap{ grid-template-columns: 1fr; gap: 12px; padding: 12px; }
+      .hero{ width: min(92vw, 520px); }
+      .chat{ width: min(92vw, 560px); }
+      .chat::after{ left: 22px; top: -8px; transform: rotate(135deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="left">
+      <img id="hero" src="tặng hoa.jpg" alt="Tặng hoa 20/10" class="hero" />
+    </div>
+
+    <div class="right">
+      <div class="chat">
+        <div class="typewriter" id="typeTarget"></div><span class="cursor" id="cursor"></span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const img = document.getElementById('hero');
+      img.addEventListener('error', ()=>{ img.src = 'tanghoa.jpg'; });
+    })();
+
+    const message = `Thảo ơi,\n\nHôm nay là 20/10, một ngày mà mọi bông hoa đều nở rộ, và cũng là ngày mà anh muốn gửi những lời này đến bông hoa xinh nhất với anh🌸.\nHii, phải nói là anh thật may mắn khi được gặp và trò chuyện với em, giúp cho mỗi ngày trôi qua với anh có thêm niềm vui và ý nghĩa hơn.\nAnh chúc em 20/10 thật vui vẻ, hạnh phúc, luôn là bông hoa xinh tươi rực rỡ, chúc cho những điều may mắn và tốt đẹp nhất sẽ đến với em <3\nVà anh cũng mong một ngày nào đó sẽ có thể được đồng hành với em trong vai trò đặc biệt hơn để những lời chúc này có thể gửi đến em mỗi ngày chứ không phải đợi đến những dịp đặc biệt>.<\nGửi em - Bông hoa xinh🌸\nThân gửi,\nNgười đang thương em❤.`;
+
+    const target = document.getElementById('typeTarget');
+    const cursor = document.getElementById('cursor');
+
+    function typeWriter(text, speed = 45){ // chậm hơn một chút
+      return new Promise(resolve=>{
+        let i = 0;
+        const timer = setInterval(()=>{
+          target.textContent = text.slice(0, i);
+          if (i < text.length){
+            i++;
+            target.appendChild(cursor);
+          } else {
+            clearInterval(timer);
+            resolve();
+          }
+        }, speed);
+      });
+    }
+
+    function dropPetals(count=8, minDur=9, maxDur=13){
+      const emojis=["💮","🌸"];
+      for(let i=0;i<count;i++){
+        const span=document.createElement('span');
+        span.className='petal';
+        span.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+        span.style.left=Math.random()*100+'vw';
+        const size=18+Math.random()*14;
+        span.style.fontSize=size+'px';
+        const dur=(Math.random()*(maxDur-minDur))+minDur;
+        span.style.setProperty('--dur', dur+'s');
+        const rot=Math.random()<0.5?720:-720;
+        span.style.setProperty('--rot', rot+'deg');
+        document.body.appendChild(span);
+        setTimeout(()=>span.remove(), (dur+0.5)*1000);
+      }
+    }
+
+    window.addEventListener('load', async()=>{
+      await typeWriter(message, 45);
+      setInterval(()=>{ dropPetals(5 + Math.floor(Math.random()*6)); }, 2500);
+    });
+  </script>
+</body>
+</html>
