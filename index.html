@@ -351,7 +351,7 @@ function typeWriter(text, speed = 45){
 function dropPetals(){
   const s = document.createElement("span");
   s.className = "petal";
-  s.textContent = Math.random() < 0.5 ? "🌸" : "💮";
+  s.textContent = Math.random() < 0.5 ? "🌸" : "❤️";
   s.style.left = Math.random() * 100 + "vw";
   s.style.setProperty("--dur", 8 + Math.random() * 5 + "s");
   s.style.setProperty("--rot", Math.random() < 0.5 ? "720deg" : "-720deg");
